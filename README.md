@@ -5,7 +5,7 @@ Twins is a tiny (**~1kb**) but punchy reactive library to drop into your existin
 **V0.5**
 
 
-### Setup
+## Setup and basic demo
 
 Include script and create a container with an ID, that serves as a closed cosmos for your twins logic.
 
@@ -26,3 +26,25 @@ calc.state = {
 ```
 
 **That's it. Your input is now twins with your p tag!**
+
+## Filters
+
+```html
+<section id="calculator">
+	<input type="number" twins="money">
+	<p twins="money" twins-filter="currency">0 USD</p>
+<section>
+```
+```javascript
+var calc = new twins('calculator')
+calc.state = {
+	mynumber: 0,
+	money: 0,
+}
+
+calc.filters = {
+	currency: (val) => {
+		return Number(val).toLocaleString() + ' USD'
+	}
+}
+```
