@@ -36,15 +36,38 @@ calc.state = {
 <section>
 ```
 ```javascript
-var calc = new twins('calculator')
-calc.state = {
+var vm = new twins('calculator')
+vm.state = {
 	mynumber: 0,
 	money: 0,
 }
 
-calc.filters = {
+vm.filters = {
 	currency: (val) => {
 		return Number(val).toLocaleString() + ' USD'
+	}
+}
+```
+
+## Computed properties
+
+```html
+<section id="calculator">
+	<input type="number" twins="width">
+	<input type="number" twins="height">
+	<p twins="size">0 USD</p>
+<section>
+```
+```javascript
+var vm = new twins('calculator')
+vm.state = {
+	width: 0,
+	height: 0,
+}
+
+vm.computed = {
+	size: () => {
+		return vm.state.width * vm.state.height
 	}
 }
 ```
