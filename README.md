@@ -22,6 +22,7 @@ var calc = new twins('calculator')
 calc.state = {
 	mynumber: 0,
 }
+calc.init()
 </script>
 ```
 
@@ -47,6 +48,7 @@ vm.filters = {
 		return Number(val).toLocaleString() + ' USD'
 	}
 }
+vm.init()
 ```
 
 ## Computed properties
@@ -70,4 +72,5 @@ vm.computed = {
 		return vm.state.width * vm.state.height
 	}
 }
+vm.init()
 ```
