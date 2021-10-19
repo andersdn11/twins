@@ -1,6 +1,6 @@
 ![alt text](https://github.com/andersdn11/twins/blob/main/twins.png?raw=true)
 
-Twins is a tiny (**~1kb**) but punchy reactive library to drop into your existing project.
+Twins is a tiny (**~2kb**) but punchy reactive library to drop into your existing project.
 
 **V0.5**
 
@@ -18,7 +18,7 @@ Include script and create a container with an ID, that serves as a closed cosmos
 ```javascript
 <script src="path/to/twins.min.js"></script>
 <script>
-var calc = new twins('calculator')
+const calc = new twins('calculator')
 calc.state = {
 	mynumber: 0,
 }
@@ -29,7 +29,7 @@ calc.init()
 **That's it. Your input is now twins with your p tag!**
 
 ## Filters
-
+Filters let's you apply text or number formatting to your output.
 ```html
 <section id="calculator">
 	<input type="number" twins="money">
@@ -52,7 +52,7 @@ vm.init()
 ```
 
 ## Computed properties
-
+Computed properties gives you more freedom to create complex logic, that is not possible in a state value alone.
 ```html
 <section id="calculator">
 	<input type="number" twins="width">
@@ -71,6 +71,38 @@ vm.computed = {
 	size: () => {
 		return vm.state.width * vm.state.height
 	}
+}
+vm.init()
+```
+
+You can even reference one computed inside another computed
+
+```javascript
+vm.computed = {
+	size: () => {
+		return vm.state.width * vm.state.height
+	},
+	depth: () => {
+		return vm.computed.size() + 10
+	}
+}
+vm.init()
+```
+
+## Logic - If else
+Very simple if statements included out of the box. 
+! (NOT) operator supported, which is also the way to make else statements.
+```html
+<section id="calculator">
+	<input type="checkbox" twins="bigFontSize">
+	<p twins-if="!bigFontSize">I'm a small boi.</p>
+	<h1 twins-if="bigFontSize">I'm a big boi.</h1>
+<section>
+```
+```javascript
+var vm = new twins('calculator')
+vm.state = {
+	bigFontSize: 0,
 }
 vm.init()
 ```
