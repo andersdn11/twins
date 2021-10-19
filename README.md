@@ -106,3 +106,30 @@ vm.state = {
 }
 vm.init()
 ```
+
+twins-if works with computed properties aswell, allowing you to make more complex if statements. Only needs to return a bool.
+```html
+<section id="calculator">
+	<input type="number" twins="width">
+	<input type="number" twins="height">
+	
+	<p twins-if="is_square">Square</p>
+	<p twins-if="!is_square">Rectangle</p>
+<section>
+```
+```javascript
+var vm = new twins('calculator')
+vm.state = {
+	height: 0,
+	width: 0,
+}
+vm.computed = {
+	is_square: () => {
+		if( vm.state.height === vm.state.width ) {
+			return true
+		}
+		return false
+	}
+}
+vm.init()
+```
