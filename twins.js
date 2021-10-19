@@ -11,6 +11,10 @@ function twins(target) {
 
 	this.init = function() {
 
+		if( this.target == null) {
+			console.error('TWINS: Target ID not found.')
+			return false;
+		}
 		var that = this
 
 		// Loop through state and make reactive.
@@ -26,7 +30,6 @@ function twins(target) {
 		reactives.forEach( (elm) => {
 
 			if( elm.type !== undefined) { // Only issue a notification on inputs
-
 				switch (elm.type) {
 					case 'checkbox':
 						elm.addEventListener('change', callback)
@@ -35,6 +38,9 @@ function twins(target) {
 						elm.addEventListener('change', callback)
 						break;
 					case 'select-multiple':
+						elm.addEventListener('change', callback)
+						break;
+					case 'radio':
 						elm.addEventListener('change', callback)
 						break;
 					default:
@@ -49,6 +55,11 @@ function twins(target) {
 			}
 
 		});
+
+		this.runComputed()
+		this.runConditionals()
+
+		this.target.removeAttribute('twins-cloak')
 
 	}
 
@@ -78,7 +89,7 @@ function twins(target) {
 		let refstate = elm.getAttribute('twins')
 
 		let value = elm.value
-		if( elm.type == "checkbox") value = elm.checked;
+		if( elm.type == "checkbox" ) value = elm.checked;
 
 		this.state[refstate] = value;
 	}
@@ -108,6 +119,7 @@ function twins(target) {
 		});
 
 		this.runComputed()
+		this.runConditionals()
 	}
 
 	//-----------------------------------------------
@@ -127,7 +139,6 @@ function twins(target) {
 					computed_dom_refs.forEach( (elm) => {
 
 						if( elm.getAttribute('twins-filter') !== null ) { // Run past filter if exist.
-
 							let filterName 		= elm.getAttribute('twins-filter')
 							var filtered_val 	= this.filters[filterName](computed_val)
 							elm.innerHTML 		= filtered_val
@@ -143,11 +154,48 @@ function twins(target) {
 		}
 	}
 
+	this.runConditionals = () => {
+		var ifs = document.querySelectorAll('[twins-if]')
+
+		if( ifs == null ) return false;
+		ifs.forEach( (elm) => {
+			var conditionalState = elm.getAttribute('twins-if')
+			var is_reverse_bool = false
+
+			// If conditional has a ! as first char, then we look for the opposite.
+			if(  conditionalState && conditionalState.indexOf('!') == 0) {
+				conditionalState = conditionalState.substring(1); // Remove !
+				is_reverse_bool = true
+			}
+
+			var bool = this.state[conditionalState] // Pull value from state.
+
+			// Check if value is in state otherwise check if its from computed function
+			if( bool === undefined && this.computed[conditionalState] !== undefined ) {
+				bool = this.computed[conditionalState]() // Get computed value.
+			}
+
+			// Flip bool
+			if( is_reverse_bool ) {
+				bool = !bool
+			}
+
+			// Toggle visibility
+			if( bool ) {
+				elm.style.display = 'block'
+			} else {
+				elm.style.display = 'none'
+			}
+
+		})
+
+	}
+
 
 	//-----------------------------------------------
 
 	this.destroy = () => {
-		// Detach all event handlers.
+		// Remove eventlisternes..
 	}
 
 } // TWINS
