@@ -27,30 +27,33 @@ function twins(target) {
 		// Add eventlisternes
 		var reactives = this.target.querySelectorAll('[twins]')
 
+
+
 		reactives.forEach( (elm) => {
 
 			if( elm.type !== undefined) { // Only issue a notification on inputs
+
 				switch (elm.type) {
 					case 'checkbox':
-						elm.addEventListener('change', callback)
+						elm.addEventListener('change', this.eavesdrop, false)
 						break;
 					case 'select-one':
-						elm.addEventListener('change', callback)
+						elm.addEventListener('change', this.eavesdrop, false)
 						break;
 					case 'select-multiple':
-						elm.addEventListener('change', callback)
+						elm.addEventListener('change', this.eavesdrop, false)
 						break;
 					case 'radio':
-						elm.addEventListener('change', callback)
+						elm.addEventListener('change', this.eavesdrop, false)
 						break;
 					default:
-						elm.addEventListener('keyup', callback)
+						elm.addEventListener('keyup', this.eavesdrop, false)
 						break;
 				}
 
-				function callback() {
-					that.updateState(elm)
-				}
+				// function eavesdrop() {
+				// 	that.updateState(elm)
+				// }
 
 			}
 
@@ -61,6 +64,12 @@ function twins(target) {
 
 		this.target.removeAttribute('twins-cloak')
 
+	}
+
+
+	this.eavesdrop = (e) => {
+		var elm = e.srcElement;
+		this.updateState(elm)
 	}
 
 	//-----------------------------------------------
@@ -90,7 +99,7 @@ function twins(target) {
 
 		let value = elm.value
 		if( elm.type == "checkbox" ) value = elm.checked;
-
+		console.log('HIT')
 		this.state[refstate] = value;
 	}
 
@@ -195,7 +204,34 @@ function twins(target) {
 	//-----------------------------------------------
 
 	this.destroy = () => {
-		// Remove eventlisternes..
+
+		// Remove eventlisternes
+		var reactives = this.target.querySelectorAll('[twins]')
+
+		reactives.forEach( (elm) => {
+
+			if( elm.type !== undefined) { // Only issue a notification on inputs
+				switch (elm.type) {
+					case 'checkbox':
+						elm.removeEventListener('change', this.eavesdrop, false)
+						break;
+					case 'select-one':
+						elm.removeEventListener('change', this.eavesdrop, false)
+						break;
+					case 'select-multiple':
+						elm.removeEventListener('change', this.eavesdrop, false)
+						break;
+					case 'radio':
+						elm.removeEventListener('change', this.eavesdrop, false)
+						break;
+					default:
+						elm.removeEventListener('keyup', this.eavesdrop, false)
+						break;
+				}
+
+			}
+
+		});
 	}
 
 } // TWINS
