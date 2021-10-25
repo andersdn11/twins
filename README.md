@@ -4,6 +4,8 @@ Twins is a tiny (**~2kb**) but punchy reactive library to drop into your existin
 
 **V1.0**
 
+Demo / Playground: https://codepen.io/Andersdn11/pen/GRvWpQj?editors=1010  
+   
 CDN link: https://cdn.jsdelivr.net/gh/andersdn11/twins@main/twins.min.js
 
 ## Setup and basic demo
