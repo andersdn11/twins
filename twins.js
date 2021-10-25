@@ -15,7 +15,6 @@ function twins(target) {
 			console.error('TWINS: Target ID not found.')
 			return false;
 		}
-		var that = this
 
 		// Loop through state and make reactive.
 		for (let key in this.state ) {
@@ -26,8 +25,6 @@ function twins(target) {
 
 		// Add eventlisternes
 		var reactives = this.target.querySelectorAll('[twins]')
-
-
 
 		reactives.forEach( (elm) => {
 
@@ -99,7 +96,6 @@ function twins(target) {
 
 		let value = elm.value
 		if( elm.type == "checkbox" ) value = elm.checked;
-		console.log('HIT')
 		this.state[refstate] = value;
 	}
 
