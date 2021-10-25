@@ -2,8 +2,9 @@
 
 Twins is a tiny (**~2kb**) but punchy reactive library to drop into your existing project.
 
-**V0.5**
+**V1.0**
 
+CDN link: https://cdn.jsdelivr.net/gh/andersdn11/twins@main/twins.min.js
 
 ## Setup and basic demo
 
@@ -16,7 +17,7 @@ Include script and create a container with an ID, that serves as a closed cosmos
 <section>
 ```
 ```javascript
-<script src="path/to/twins.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/andersdn11/twins@main/twins.min.js"></script>
 <script>
 const calc = new twins('calculator')
 calc.state = {
