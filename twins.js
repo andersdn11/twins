@@ -210,7 +210,7 @@ function twins(target) {
 
 		reactives.forEach( (elm) => {
 
-			if( elm.type !== undefined) { // Only issue a notification on inputs
+			if( elm.type !== undefined) {
 				switch (elm.type) {
 					case 'checkbox':
 						elm.removeEventListener('change', this.eavesdrop, false)
